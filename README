@@ -28,7 +28,7 @@ SYNOPSIS
 
   my ($elt, $done);
   do {
-      ($elt, $done) = <$list>;
+      ($elt, $done) = @{<$list>};
       print "$elt ";
   } while (not $done);
   print "\n";
