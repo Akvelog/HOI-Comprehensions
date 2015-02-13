@@ -5,7 +5,7 @@
 #########################
 
 use Test::More;
-use HOI::Comprehensions;
+use HOI::Comprehensions tests => 4;
 #plan tests => 4;
 #BEGIN { use_ok('HOI::Comprehensions') };
 ok(1);
@@ -45,4 +45,4 @@ ok($cnt_done == 18);
 
 ok($list->is_over());
 
-done_testing(4);
+#done_testing(4);
