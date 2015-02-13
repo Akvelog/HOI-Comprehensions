@@ -4,8 +4,8 @@
 
 #########################
 
-use Test::More;
-use HOI::Comprehensions tests => 4;
+use Test::More tests => 4;
+use HOI::Comprehensions;
 #plan tests => 4;
 #BEGIN { use_ok('HOI::Comprehensions') };
 ok(1);
