@@ -18,8 +18,8 @@ my $list = HOI::Comprehensions::comp( sub { $x + $y + $z + $w }, x => [ 1, 2, 3 
 my ($elt, $done);
 sub {
     do {
-        ($elt, $done) = <$list>;
-        #diag("elt = $elt");
+        ($elt, $done) = @{<$list>};
+        diag("elt = $elt");
     } while (not $done);
 }->();
 

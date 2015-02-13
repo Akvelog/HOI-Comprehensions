@@ -149,7 +149,7 @@ sub next {
 }
 
 use overload
-    '<>' => sub { $_[0]->next(0) },
+    '<>' => sub { my @ret = $_[0]->next(0); \@ret },
     '+' => 
     sub { 
         #print(scalar(@{$_[0]->{list}}), ' ', $_[1], "\n"); 
@@ -174,7 +174,7 @@ HOI::Comprehensions - Higher-Order Imperative "Re"features in Perl: List Compreh
 
   my ($elt, $done);
   do {
-      ($elt, $done) = <$list>;
+      ($elt, $done) = @{<$list>};
       print "$elt ";
   } while (not $done);
   print "\n";
