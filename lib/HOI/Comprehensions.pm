@@ -3,7 +3,7 @@ package HOI::Comprehensions;
 require Exporter;
 our @ISA = qw( Exporter );
 our @EXPORT_OK = qw( comp );
-our $VERSION = '0.041';
+our $VERSION = '0.042';
 
 
 sub comp {
@@ -234,7 +234,8 @@ A list comprehension object is actually a blessed hashref.
 =head2 <>
 
 List evaluation iterator. Returns the "next" element generated in the sequence in the 
-situation of eager evaluation, and a flag telling whether the evaluation is done.
+situation of eager evaluation, and a flag telling whether the evaluation is done, together
+in a arrayref.
 
 =head2 +
 

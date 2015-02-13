@@ -88,7 +88,8 @@ OPERATORS
 <>
 
 List evaluation iterator. Returns the "next" element generated in the sequence in the 
-situation of eager evaluation, and a flag telling whether the evaluation is done.
+situation of eager evaluation, and a flag telling whether the evaluation is done, together
+in a arrayref.
 
 +
 

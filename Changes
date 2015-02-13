@@ -33,3 +33,6 @@ Revision history for Perl extension HOI::Comprehensions.
 
 0.041 Thu Feb 12 2015
     - Modified test plans.
+
+0.042 Fri Feb 13 2015
+    - Modified operator<> for older perls.
