@@ -36,3 +36,7 @@ Revision history for Perl extension HOI::Comprehensions.
 
 0.042 Fri Feb 13 2015
     - Modified operator<> for older perls.
+
+0.043 Thu May 28 2015
+    - Bugfix: empty list generators cause undone evaluation.
+    - Added method: force

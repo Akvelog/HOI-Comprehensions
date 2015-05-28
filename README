@@ -83,6 +83,12 @@ get_member($)
 Get a member of a list comprehension object by name.
 A list comprehension object is actually a blessed hashref.
 
+force
+
+Eval the comprehension eagerly. Beware - it will be trapped forever in an infinite 
+comprehension.
+The method returns the evaluated list reference.
+
 OPERATORS
 
 <>

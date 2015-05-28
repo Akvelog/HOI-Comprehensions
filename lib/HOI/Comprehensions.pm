@@ -3,7 +3,7 @@ package HOI::Comprehensions;
 require Exporter;
 our @ISA = qw( Exporter );
 our @EXPORT_OK = qw( comp );
-our $VERSION = '0.042';
+our $VERSION = '0.043';
 
 
 sub comp {
@@ -23,10 +23,10 @@ sub comp {
                         my $idx = 0; 
                         sub { 
                             if ($#_ == -1) {
-                                my $last_ret = { $key => $value->[$idx] };
+                                my $last_ret = (defined $value->[$idx]) ? { $key => $value->[$idx] } : {};
                                 $idx++;
                                 my $last_done = ($idx > $#$value);
-                                $idx %= ($#$value + 1);
+                                $idx %= ($#$value + 1) if ($#$value > -1);
                                 return ($last_done, $last_ret);
                             }
                             my ($done, $res) = @_;
@@ -123,7 +123,8 @@ sub step_next_lazy {
             $guards_ok 
         },
     );
-    my $guard = $switches{$flag}->();
+    my $guard = 0;
+    $guard = $switches{$flag}->() if (scalar(keys %$arguments) == scalar(keys %{$self->{generators}}));
     ($self->{list}, $done, $guard)
 }
 
@@ -159,6 +160,17 @@ use overload
     ;
 
 1;
+
+sub force {
+    my $self = shift;
+    if (not $self->{all_done}) {
+        my ($elt, $done);
+        do {
+            ($elt, $done) = @{<$self>};
+        } while (not $done);
+    }
+    $self->{list}
+}
 
 __END__
 
@@ -228,6 +240,12 @@ Returns a boolean which tells if the evaluation of the list is over.
 
 Get a member of a list comprehension object by name.
 A list comprehension object is actually a blessed hashref.
+
+=head2 force
+
+Eval the comprehension eagerly. Beware - it will be trapped forever in an infinite 
+comprehension.
+The method returns the evaluated list reference.
 
 =head1 OPERATORS
 
