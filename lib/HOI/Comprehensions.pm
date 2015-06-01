@@ -3,7 +3,7 @@ package HOI::Comprehensions;
 require Exporter;
 our @ISA = qw( Exporter );
 our @EXPORT_OK = qw( comp );
-our $VERSION = '0.043';
+our $VERSION = '0.044';
 
 
 sub comp {
@@ -13,6 +13,7 @@ sub comp {
         my @guards = @_;
         my %generators;
         my ($evalstr, $postfix) = ("", "");
+        my $self_;
         while ($#$generators_ > -1) {
             my ($key, $value) = (shift @$generators_, shift @$generators_);
             $evalstr .= '$self->{generators}->{'.$key.'}->(';
@@ -71,12 +72,23 @@ sub comp {
                                 return ($last_done, { $key => $last_res });
                             }
                             my ($done, $res) = @_;
-                            my ($self_res, $self_done) = $value->();
+                            my ($self_res, $self_done) =
+                            sub {
+                                my $scopestr = '';
+                                my ($package_name) = $self_->{caller};
+                                local $AttrPrefix = $package_name.'::';
+                                for my $elt (keys %$res) {
+                                    $scopestr = 'local $'."$AttrPrefix"."$elt"." = \$res->{$elt}; ";
+                                }
+                                eval $scopestr.'$value->()'
+                                #$value->();
+                            }->();
                             my $ret = { %$res, $key => $self_res };
                             ($self_done * $done, $ret);
                         }
                     );
         }
+        $self_ =
         bless
         { 
             computation => $computation, 
@@ -223,7 +235,10 @@ Generators can be arrayrefs, subroutines or list comprehensions. A subroutine ge
 return a pair ( elt, done ), where elt is the next element and done is a flag telling whether
 the iteration is over.
 
-The subroutine comp is in EXPORT_OK, but it is not exported by default
+It is possible that some generator A is dependent on another generator B. In that case, B
+must be subsequent to A. See test cases for details.
+
+The subroutine comp is in EXPORT_OK, but it is not exported by default.
 
 =head1 METHODS
 

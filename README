@@ -65,6 +65,9 @@ Generators can be arrayrefs or subroutines or list comprehensions. A subroutine 
 should return a pair ( elt, done ), where elt is the next element and done is a flag telling 
 whether the iteration is over.
 
+It is possible that some generator A is dependent on another generator B. In that case, B
+must be subsequent to A. See test cases for details.
+
 The subroutine comp is in EXPORT_OK, but it is not exported by default
 
 METHODS

@@ -40,3 +40,6 @@ Revision history for Perl extension HOI::Comprehensions.
 0.043 Thu May 28 2015
     - Bugfix: empty list generators cause undone evaluation.
     - Added method: force
+
+0.044 Mon Jun 1 2015
+    - Bugfix: dependence between generators
