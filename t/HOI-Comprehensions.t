@@ -45,7 +45,7 @@ ok($cnt_done == 18);
 
 ok($list->is_over());
 
-my $deplist = HOI::Comprehensions::comp( sub { $y + $x }, y => sub { ( $x, 1 ) }, x => [ 1, 2, 3 ] )->();
+my $deplist = HOI::Comprehensions::comp( sub { $y + $x }, y => sub { $x }, x => [ 1, 2, 3 ] )->();
 is_deeply($deplist->force, [ 2, 4, 6 ], "eq_dep");
 
 #done_testing(4);

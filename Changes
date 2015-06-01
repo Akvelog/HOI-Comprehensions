@@ -43,3 +43,6 @@ Revision history for Perl extension HOI::Comprehensions.
 
 0.044 Mon Jun 1 2015
     - Bugfix: dependence between generators
+
+0.045 Mon Jun 1 2015
+    - Feature: function generators can return a single scalar now

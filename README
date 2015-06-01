@@ -1,4 +1,4 @@
-HOI-Comprehensions version 0.02
+HOI-Comprehensions version 0.045
 ===============================
 
 INSTALLATION
@@ -63,7 +63,7 @@ variables directly instead of dereference the hashref.
 
 Generators can be arrayrefs or subroutines or list comprehensions. A subroutine generator 
 should return a pair ( elt, done ), where elt is the next element and done is a flag telling 
-whether the iteration is over.
+whether the iteration is over, or return a single element.
 
 It is possible that some generator A is dependent on another generator B. In that case, B
 must be subsequent to A. See test cases for details.

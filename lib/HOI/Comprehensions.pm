@@ -3,7 +3,7 @@ package HOI::Comprehensions;
 require Exporter;
 our @ISA = qw( Exporter );
 our @EXPORT_OK = qw( comp );
-our $VERSION = '0.044';
+our $VERSION = '0.045';
 
 
 sub comp {
@@ -69,6 +69,7 @@ sub comp {
                         sub { 
                             if ($#_ == -1) {
                                 my ($last_res, $last_done) = $value->();
+                                $last_done = 1 if (not defined $last_done);
                                 return ($last_done, { $key => $last_res });
                             }
                             my ($done, $res) = @_;
@@ -80,9 +81,10 @@ sub comp {
                                 for my $elt (keys %$res) {
                                     $scopestr = 'local $'."$AttrPrefix"."$elt"." = \$res->{$elt}; ";
                                 }
-                                eval $scopestr.'$value->()'
+                                eval $scopestr.'$value->()';
                                 #$value->();
                             }->();
+                            $self_done = 1 if (not defined $self_done);
                             my $ret = { %$res, $key => $self_res };
                             ($self_done * $done, $ret);
                         }
@@ -233,7 +235,7 @@ variables directly instead of dereference the hashref.
 
 Generators can be arrayrefs, subroutines or list comprehensions. A subroutine generator should 
 return a pair ( elt, done ), where elt is the next element and done is a flag telling whether
-the iteration is over.
+the iteration is over, or return a single element.
 
 It is possible that some generator A is dependent on another generator B. In that case, B
 must be subsequent to A. See test cases for details.
